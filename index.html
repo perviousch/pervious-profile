@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pervious Chileya - Business Administrator | Systems Developer | Marketing Specialist</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --background: #1a1a1a;
+            --text: #ffffff;
+            --primary: #3b82f6;
+            --secondary: #4b5563;
+            --accent: #f59e0b;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: var(--background);
+            color: var(--text);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        header {
+            background-color: rgba(26, 26, 26, 0.8);
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+        }
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+        }
+        nav a {
+            color: var(--text);
+            text-decoration: none;
+            margin-left: 20px;
+            transition: color 0.3s ease;
+        }
+        nav a:hover {
+            color: var(--primary);
+        }
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/placeholder.svg');
+            background-size: cover;
+            background-position: center;
+        }
+        .hero-content {
+            max-width: 800px;
+        }
+        h1, h2, h3 {
+            margin-bottom: 1rem;
+        }
+        .btn {
+            display: inline-block;
+            background-color: var(--primary);
+            color: var(--text);
+            padding: 0.5rem 1rem;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+        .btn:hover {
+            background-color: var(--accent);
+            transform: translateY(-3px);
+        }
+        .about {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin: 4rem 0;
+        }
+        .about img {
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        .about img:hover {
+            transform: scale(1.05);
+        }
+        .projects {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 4rem 0;
+        }
+        .project-card {
+            background-color: var(--secondary);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        .project-card img, .project-card video {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        .project-card .content {
+            padding: 1rem;
+        }
+        .partners {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+        .partner {
+            background-color: var(--secondary);
+            color: var(--text);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+        .partner:hover {
+            background-color: var(--primary);
+            transform: translateY(-3px);
+        }
+        footer {
+            background-color: var(--secondary);
+            color: var(--text);
+            text-align: center;
+            padding: 1rem;
+            margin-top: 4rem;
+        }
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .toggle-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+        }
+        .toggle-content.show {
+            max-height: 1000px;
+        }
+        .toggle-btn {
+            background: none;
+            border: none;
+            color: var(--primary);
+            cursor: pointer;
+            font-size: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+        .toggle-btn:hover {
+            transform: translateY(-3px);
+        }
+        .toggle-btn i {
+            transition: transform 0.3s ease;
+        }
+        .toggle-btn.active i {
+            transform: rotate(180deg);
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="#" class="logo">PC</a>
+            <div>
+                <a href="#about"><i class="fas fa-user"></i> About</a>
+                <a href="#experience"><i class="fas fa-briefcase"></i> Experience</a>
+                <a href="#services"><i class="fas fa-cogs"></i> Services</a>
+                <a href="#projects"><i class="fas fa-project-diagram"></i> Projects</a>
+                <a href="#contact"><i class="fas fa-envelope"></i> Contact</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="hero-content">
+                <h1>Pervious Chileya</h1>
+                <p>Business Administrator | Systems Developer | Marketing Specialist</p>
+                <a href="#contact" class="btn pulse"><i class="fas fa-envelope"></i> Contact Me</a>
+                <a href="#services" class="btn"><i class="fas fa-cogs"></i> My Services</a>
+            </div>
+        </section>
+
+        <section id="about" class="container about fade-in">
+            <div>
+                <h2><i class="fas fa-user"></i> About Me</h2>
+                <p>Seasoned business administrator skilled in regulatory compliance, marketing, computer system development and implementation of solutions. Known for logic, integrity, and strategically driving results in fast-paced environments. Trusted for analytical abilities and intuitive reaction to propel growth.</p>
+                <h3><i class="fas fa-graduation-cap"></i> Highest Level of Education</h3>
+                <p>Bachelor's Degree in Business Administration (CMIS) from Rusangu University, 2018 - 2023</p>
+            </div>
+            <img src="perviousch.png" alt="Pervious Chileya" width="300" height="300">
+        </section>
+
+        <section id="experience" class="container fade-in">
+            <h2><i class="fas fa-briefcase"></i> Professional Experience</h2>
+            <div class="toggle-content">
+                <h3>Asst. Marketing Manager</h3>
+                <p>Future Ventures Limited | June 2023 - Present</p>
+                <ul>
+                    <li>Marketing for 11+ retail branches across Lusaka</li>
+                    <li>Budget management</li>
+                    <li>Run over 25 major annual campaigns</li>
+                </ul>
+
+                <h3>Systems IT Manager & Marketing</h3>
+                <p>Chapi Core Tech | September 2021 - September 2023</p>
+                <ul>
+                    <li>Developed and maintained systems to improve operational efficiency</li>
+                    <li>Led system upgrades and implemented performance improvements</li>
+                    <li>Conducted market research to align system designs with customer needs</li>
+                </ul>
+
+                <h3>Customer Care Executive</h3>
+                <p>iSON Technologies | July 2021 - October 2021</p>
+                <ul>
+                    <li>Data management</li>
+                    <li>Customer relations management</li>
+                    <li>Negotiation</li>
+                </ul>
+            </div>
+            <button class="toggle-btn" aria-label="Toggle Experience Content">
+                <i class="fas fa-chevron-down"></i>
+            </button>
+        </section>
+
+        <section id="services" class="container fade-in">
+            <h2><i class="fas fa-cogs"></i> Services</h2>
+            <div class="toggle-content">
+                <h3><i class="fas fa-laptop-code"></i> System Development</h3>
+                <ul>
+                    <li>General Web based sites</li>
+                    <li>Bespoken Management systems</li>
+                    <li>Google based services</li>
+                    <li>System design and optimization</li>
+                </ul>
+
+                <h3><i class="fas fa-bullhorn"></i> Marketing</h3>
+                <ul>
+                    <li>Strategizing</li>
+                    <li>Brand formulation & Revamp</li>
+                    <li>Design (Flyers, Billboards, Pull-ups, Books, Brochures)</li>
+                    <li>Social media management</li>
+                </ul>
+
+                <h3><i class="fas fa-paint-brush"></i> Corporate Design</h3>
+                <ul>
+                    <li>Interior design</li>
+                    <li>Organogram</li>
+                    <li>Headers and Invoices</li>
+                    <li>Cards and Surface pastes</li>
+                </ul>
+            </div>
+            <button class="toggle-btn" aria-label="Toggle Services Content">
+                <i class="fas fa-chevron-down"></i>
+            </button>
+        </section>
+
+        <section id="projects" class="container fade-in">
+            <h2><i class="fas fa-project-diagram"></i> Recent Projects</h2>
+            <div class="projects">
+                <div class="project-card">
+                    <video src="clientms.mp4" alt="Client Management System" autoplay loop muted></video>
+                    <div class="content">
+                        <h3>Client Management System</h3>
+                        <p>Designed, developed, and implemented a system for a supply and acquisition agricultural firm operating since 2005. Reduced manual operation costs by 70% and improved record keeping, supply chain management, and data storage in Mansa, Zambia.</p>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <video src="ulend.mp4" alt="uLend Loan Management System" autoplay loop muted></video>
+                    <div class="content">
+                        <h3>uLend Loan Management System</h3>
+                        <p>Developed and implemented an integrated system for loan management, investor management, and auction system for an SME in Lusaka, Zambia.</p>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <video src="ulend.mp4" alt="MKGT Software" autoplay loop muted></video>
+                    <div class="content">
+                        <h3>MKGT Software</h3>
+                        <p>Designed and implemented a bespoke software to streamline marketing department operations for a leading retail company in Lusaka, Zambia.</p>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <video src="loyaltyprogram.mp4" alt="Loyalty Program" autoplay loop muted></video>
+                    <div class="content">
+                        <h3>Loyalty Program</h3>
+                        <p>Coordinated and implemented a loyalty program for a leading retail company, adding over 5,000 new members in less than a year.</p>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <img src="marketing.png" alt="Marketing Campaigns">
+                    <div class="content">
+                        <h3>Marketing Campaigns</h3>
+                        <p>Coordinated over 20 major campaigns for a leading retail company in Lusaka, Zambia, increasing ROI by 10% and reducing costs by 30% in the last year.</p>
+                    </div>
+                </div>
+            </div>
+            <h3><i class="fas fa-handshake"></i> Partnered With</h3>
+            <div class="partners">
+                <span class="partner">Cheers Hypermarket</span>
+                <span class="partner">Future Distribution</span>
+                <span class="partner">Chapi Core Tech</span>
+                <span class="partner">BLAPSIS</span>
+                <span class="partner">JCM HOLDINGS LIMITED</span>
+                <span class="partner">Others (NDA Basis)</span>
+            </div>
+        </section>
+
+        <section id="contact" class="container fade-in">
+            <h2><i class="fas fa-envelope"></i> Get in Touch</h2>
+            <p>I'm always open to new opportunities and collaborations.</p>
+            <a href="mailto:perviousch@gmail.com" class="btn"><i class="fas fa-envelope"></i> Email Me</a>
+            <a href="https://linkedin.com/in/pervious-chileya-631a6b183/" class="btn"><i class="fab fa-linkedin"></i> Connect on LinkedIn</a>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Pervious Chileya. All rights reserved.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            // Fade-in animation
+            const fadeElems = document.querySelectorAll('.fade-in');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            });
+            fadeElems.forEach(elem => observer.observe(elem));
+
+            // Toggle content
+            const toggleBtns = document.querySelectorAll('.toggle-btn');
+            toggleBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const content = btn.previousElementSibling;
+                    content.classList.toggle('show');
+                    btn.classList.toggle('active');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
