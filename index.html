@@ -12,26 +12,52 @@
             --primary: #3b82f6;
             --secondary: #4b5563;
             --accent: #f59e0b;
+            --gradient-primary: linear-gradient(45deg, #3b82f6, #60a5fa);
+            --gradient-secondary: linear-gradient(45deg, #f59e0b, #fbbf24);
+            --shadow-color: rgba(0, 0, 0, 0.2);
+            --card-bg: rgba(75, 85, 99, 0.9);
+            --hover-lift: translateY(-5px);
         }
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', Arial, sans-serif;
             background-color: var(--background);
             color: var(--text);
             line-height: 1.6;
             margin: 0;
             padding: 0;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
         }
         .container {
             width: 90%;
             max-width: 1200px;
             margin: 0 auto;
             padding: 20px;
+            position: relative;
+        }
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: var(--gradient-primary);
+            border-radius: 3px;
+            opacity: 0.5;
         }
         header {
-            background-color: rgba(26, 26, 26, 0.8);
+            background-color: rgba(26, 26, 26, 0.95);
             position: fixed;
             width: 100%;
             z-index: 1000;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
+        }
+        header.hide {
+            transform: translateY(-100%);
         }
         nav {
             display: flex;
@@ -39,83 +65,229 @@
             align-items: center;
             padding: 1rem;
         }
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-decoration: none;
+            transition: transform 0.3s ease;
+        }
+        .logo:hover {
+            transform: scale(1.1);
+        }
         nav a {
             color: var(--text);
             text-decoration: none;
             margin-left: 20px;
-            transition: color 0.3s ease;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            position: relative;
+            padding: 5px 0;
+        }
+        nav a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background: var(--gradient-primary);
+            transition: width 0.3s ease;
+        }
+        nav a:hover::after {
+            width: 100%;
         }
         nav a:hover {
             color: var(--primary);
+            transform: translateY(-2px);
         }
         .hero {
-            height: 100vh;
+            min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
-            background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/placeholder.svg');
+            background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('/placeholder.svg');
             background-size: cover;
             background-position: center;
+            background-attachment: fixed;
+            padding: 2rem 1rem;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at center, transparent 0%, rgba(0,0,0,0.7) 100%);
+            z-index: 1;
         }
         .hero-content {
             max-width: 800px;
+            padding: 0 1rem;
+            position: relative;
+            z-index: 2;
         }
-        h1, h2, h3 {
+        .hero-content h1 {
+            font-size: clamp(2rem, 5vw, 4rem);
             margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            animation: fadeInDown 1s ease-out;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
         }
-        .btn {
-            display: inline-block;
-            background-color: var(--primary);
-            color: var(--text);
-            padding: 0.5rem 1rem;
-            text-decoration: none;
-            border-radius: 5px;
-            transition: background-color 0.3s ease, transform 0.3s ease;
-        }
-        .btn:hover {
-            background-color: var(--accent);
-            transform: translateY(-3px);
+        .hero-content p {
+            font-size: clamp(1rem, 2vw, 1.5rem);
+            margin-bottom: 2rem;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+            animation: fadeInUp 1s ease-out 0.3s backwards;
         }
         .about {
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            margin: 4rem 0;
+            justify-content: center;
+            margin: 6rem 0;
+            gap: 4rem;
+            padding: 2rem 0;
+            position: relative;
+        }
+        .about-text {
+            flex: 1 1 0;
+            min-width: 320px;
+            max-width: 600px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .about-img-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex: 0 0 auto;
         }
         .about img {
             width: 300px;
             height: 300px;
             border-radius: 50%;
             object-fit: cover;
-            transition: transform 0.3s ease;
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            border: 3px solid transparent;
+            background: var(--gradient-primary) border-box;
         }
         .about img:hover {
-            transform: scale(1.05);
+            transform: scale(1.05) rotate(5deg);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.4);
         }
-        .projects {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin: 4rem 0;
+        .about h2, .about h3 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            position: relative;
+            display: inline-block;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .about h2::after, .about h3::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--gradient-primary);
+            border-radius: 2px;
+            transition: width 0.3s ease;
+        }
+        .about h2:hover::after, .about h3:hover::after {
+            width: 100%;
+        }
+        .about p {
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+            text-align: justify;
+            position: relative;
         }
         .project-card {
             background-color: var(--secondary);
             border-radius: 10px;
             overflow: hidden;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, var(--primary), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .project-card:hover::before {
+            opacity: 0.1;
         }
         .project-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-        }
-        .project-card img, .project-card video {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+            border-color: var(--primary);
         }
         .project-card .content {
-            padding: 1rem;
+            padding: 1.5rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            background: linear-gradient(to bottom, transparent, rgba(0,0,0,0.8));
+        }
+        .btn {
+            display: inline-block;
+            background: var(--gradient-primary);
+            color: var(--text);
+            padding: 0.8rem 1.5rem;
+            text-decoration: none;
+            border-radius: 5px;
+            box-shadow: 0 4px 15px var(--shadow-color);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+            border: none;
+            cursor: pointer;
+        }
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: 0.5s;
+        }
+        .btn:hover::before {
+            left: 100%;
+        }
+        .btn:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 8px 25px var(--shadow-color);
+        }
+        .btn.secondary {
+            background: var(--gradient-secondary);
         }
         .partners {
             display: flex;
@@ -123,30 +295,73 @@
             justify-content: center;
             gap: 1rem;
             margin: 2rem 0;
+            padding: 1rem;
         }
         .partner {
-            background-color: var(--secondary);
+            background: var(--gradient-primary);
             color: var(--text);
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
             font-size: 0.9rem;
-            transition: background-color 0.3s ease, transform 0.3s ease;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
         }
         .partner:hover {
-            background-color: var(--primary);
             transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(59, 130, 246, 0.3);
+            border-color: var(--primary);
         }
         footer {
-            background-color: var(--secondary);
+            background: linear-gradient(to right, var(--secondary), var(--background));
             color: var(--text);
             text-align: center;
-            padding: 1rem;
+            padding: 2rem;
             margin-top: 4rem;
+            position: relative;
+        }
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--gradient-primary);
+        }
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
         }
         .fade-in {
             opacity: 0;
             transform: translateY(20px);
-            transition: opacity 0.5s ease, transform 0.5s ease;
+            transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
         .fade-in.visible {
             opacity: 1;
@@ -155,10 +370,10 @@
         .toggle-content {
             max-height: 0;
             overflow: hidden;
-            transition: max-height 0.5s ease;
+            transition: max-height 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
         .toggle-content.show {
-            max-height: 1000px;
+            max-height: 2000px;
         }
         .toggle-btn {
             background: none;
@@ -166,10 +381,18 @@
             color: var(--primary);
             cursor: pointer;
             font-size: 1.5rem;
-            transition: transform 0.3s ease;
+            transition: all 0.3s ease;
+            padding: 0.5rem;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         .toggle-btn:hover {
             transform: translateY(-3px);
+            background: rgba(59, 130, 246, 0.1);
         }
         .toggle-btn i {
             transition: transform 0.3s ease;
@@ -177,6 +400,90 @@
         .toggle-btn.active i {
             transform: rotate(180deg);
         }
+        @media screen and (max-width: 768px) {
+            .about {
+                flex-direction: column-reverse;
+                text-align: center;
+                gap: 2rem;
+                margin: 4rem 0;
+            }
+            .about-text {
+                max-width: 100%;
+                min-width: 0;
+            }
+            .about-img-wrapper {
+                width: 100%;
+                justify-content: center;
+            }
+            .about img {
+                width: 250px;
+                height: 250px;
+                margin: 0 auto;
+            }
+            nav {
+                flex-direction: column;
+                padding: 0.5rem;
+            }
+            nav div {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 1rem;
+                margin-top: 1rem;
+            }
+            nav a {
+                margin: 0;
+                font-size: 0.9rem;
+            }
+        }
+        @media screen and (max-width: 480px) {
+            .container {
+                width: 95%;
+                padding: 15px;
+            }
+            .hero-content h1 {
+                font-size: 2rem;
+            }
+            .hero-content p {
+                font-size: 1rem;
+            }
+            .btn {
+                display: block;
+                margin: 1rem auto;
+                width: 80%;
+                max-width: 250px;
+            }
+            .about img {
+                width: 200px;
+                height: 200px;
+            }
+            .partner {
+                font-size: 0.8rem;
+                padding: 0.6rem 1rem;
+            }
+        }
+        
+        .projects {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin: 4rem 0;
+            padding: 1rem;
+        }
+        
+        .project-card img, .project-card video {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .project-card .content {
+            padding: 1.5rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
         @keyframes pulse {
             0% { transform: scale(1); }
             50% { transform: scale(1.05); }
@@ -184,6 +491,93 @@
         }
         .pulse {
             animation: pulse 2s infinite;
+        }
+        .experience-item {
+            margin-bottom: 2rem;
+            padding-left: 1.5rem;
+            border-left: 3px solid var(--primary);
+        }
+        .experience-item h3 {
+            color: var(--text);
+            background: none;
+            -webkit-background-clip: initial;
+            background-clip: initial;
+            margin-bottom: 0.5rem;
+        }
+         .experience-item p strong {
+            color: var(--accent);
+        }
+        .experience-item ul {
+            list-style-type: disc;
+            padding-left: 20px;
+            margin-top: 0.5rem;
+        }
+        .experience-item ul li {
+            margin-bottom: 0.25rem;
+        }
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        .skill-category h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+        }
+        .skill-category h3 i {
+            margin-right: 0.5rem;
+        }
+        .skill-category ul {
+            list-style: none;
+            padding: 0;
+        }
+        .skill-category ul li {
+            background-color: var(--secondary);
+            padding: 0.5rem 1rem;
+            margin-bottom: 0.5rem;
+            border-radius: 5px;
+            transition: transform 0.2s ease, background-color 0.2s ease;
+        }
+        .skill-category ul li:hover {
+            transform: translateX(5px);
+            background-color: var(--primary);
+        }
+        .certifications-list {
+            margin-top: 2rem;
+        }
+        .certification-item {
+            background-color: var(--secondary);
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 5px;
+            border-left: 5px solid var(--accent);
+        }
+        .certification-item p strong {
+            color: var(--primary);
+        }
+        .scroll-down-arrow {
+            margin: 2.5rem auto 0 auto;
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--primary);
+            font-size: 2.5rem;
+            animation: bounceDown 2s infinite;
+            transition: color 0.3s;
+            z-index: 3;
+        }
+        .scroll-down-arrow:hover {
+            color: var(--accent);
+        }
+        @keyframes bounceDown {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(18px); }
         }
     </style>
 </head>
@@ -208,60 +602,117 @@
                 <p>Business Administrator | Systems Developer | Marketing Specialist</p>
                 <a href="#contact" class="btn pulse"><i class="fas fa-envelope"></i> Contact Me</a>
                 <a href="#services" class="btn"><i class="fas fa-cogs"></i> My Services</a>
+                <div class="scroll-down-arrow" onclick="document.getElementById('about').scrollIntoView({behavior: 'smooth'});" aria-label="Scroll Down">
+                    <i class="fas fa-chevron-down"></i>
+                </div>
             </div>
         </section>
 
         <section id="about" class="container about fade-in">
-            <div>
+            <div class="about-text">
                 <h2><i class="fas fa-user"></i> About Me</h2>
-                <p>Business Administrator specializing in Computer Management & Information Systems. A professional at using tech based solutions to solve corporate problems and optimization of workflow. Currently applying my expertise in marketing and technology to drive brand success using data based solutions. Also providing consultancy and advisory services for SMEs.</p>
-                <h3><i class="fas fa-graduation-cap"></i> Highest Level of Education</h3>
-                <p>Bachelor's Degree in Business Administration (CMIS) from Rusangu University, 2018 - 2023</p>
+                <p>Seasoned business administrator skilled in regulatory compliance, marketing, data management, computer system development and implementing solutions. Known for logic, integrity, and strategically driving results in fast-paced environments. Trusted for analytical abilities and intuitive reaction to propel growth.</p>
+                
+                <h3><i class="fas fa-graduation-cap"></i> Education</h3>
+                <p><strong>Rusangu University</strong><br>
+                   Bachelor's Degree, Business Administration in Computer Management & Information Systems (CMIS)<br>
+                   May 2018 - February 2023 | GPA: 2.8</p>
+                <p><strong>Fordina Pandeli Secondary School</strong><br>
+                   High School Certificate<br>
+                   January 2015 - January 2017</p>
             </div>
-            <img src="perviousch.png" alt="Pervious Chileya" width="300" height="300">
+            <div class="about-img-wrapper">
+                <img src="./perviousch.png" alt="Pervious Chileya" width="300" height="300">
+            </div>
         </section>
 
         <section id="experience" class="container fade-in">
             <h2><i class="fas fa-briefcase"></i> Professional Experience</h2>
-            <div class="toggle-content">
-                <h3>Digital Marketing Manager</h3>
-                <p>Theotoka Laboratory Solutions | March 2025 - Present</p>
-                <ul>
-                    <li>Established and managing all digital assets</li>
-                    <li>Budget management</li>
-                    <li>Email Marketing of over 1700 contacts</li>
-                    <li>social media Marketing</li>
-                    <li>SEO</li>
-                    <li>Achieving over 2000% activity rate increase in social media</li>
-                    <li>Creative design and content creation </li>
-                </ul>
-                <h3>Asst. Marketing Manager</h3>
-                <p>Future Ventures Limited | June 2023 - January 2025</p>
-                <ul>
-                    <li>Marketing for 11+ retail branches across Lusaka</li>
-                    <li>Budget management</li>
-                    <li>Run over 25 major annual campaigns</li>
-                </ul>
-
-                <h3>Systems IT Manager & Marketing</h3>
-                <p>Chapi Core Tech | September 2021 - September 2023</p>
-                <ul>
-                    <li>Developed and maintained systems to improve operational efficiency</li>
-                    <li>Led system upgrades and implemented performance improvements</li>
-                    <li>Conducted market research to align system designs with customer needs</li>
-                </ul>
-
-                <h3>Customer Care Executive</h3>
-                <p>iSON Technologies | July 2021 - October 2021</p>
-                <ul>
-                    <li>Data management</li>
-                    <li>Customer relations management</li>
-                    <li>Negotiation</li>
-                </ul>
+            <div class="toggle-content show">
+                <div class="experience-item">
+                    <h3>Digital Marketing Manager</h3>
+                    <p><strong>Theotoka Laboratory Solutions</strong> | March 2025 - Present</p>
+                    <ul>
+                        <li>Established and managing all digital assets</li>
+                        <li>Budget management</li>
+                        <li>Email Marketing of over 1700 contacts</li>
+                        <li>Social media Marketing</li>
+                        <li>SEO</li>
+                        <li>Achieving over 2000% activity rate increase in social media</li>
+                        <li>Creative design and content creation</li>
+                    </ul>
+                </div>
+                <div class="experience-item">
+                    <h3>Asst. Marketing Manager (marketing and design officer)</h3>
+                    <p><strong>Future Ventures Limited (Cheers Hypermarket)</strong> | Lusaka, Zambia | June 2023 - January 2025</p>
+                    <ul>
+                        <li>Marketing (instore, outdoor and digital) and design for 11+ retail Branches</li>
+                        <li>Run over 25 successful Major campaigns centered on sales</li>
+                        <li>Data entry and management for loyalty program</li>
+                        <li>Budget Management</li>
+                    </ul>
+                </div>
+                <div class="experience-item">
+                    <h3>Systems IT manager & Marketing</h3>
+                    <p><strong>Chapi core tech</strong> | Lusaka, Zambia | September 2021 - September 2023</p>
+                    <ul>
+                        <li>Developed and maintained systems to improve operational efficiency.</li>
+                        <li>Led system upgrades by analyzing infrastructure and implementing performance improvements.</li>
+                        <li>Engaged stakeholders to ensure system updates met expectations</li>
+                        <li>Conducted market research to align system designs with customer needs</li>
+                    </ul>
+                </div>
+                <div class="experience-item">
+                    <h3>Customer Care Executive</h3>
+                    <p><strong>ISON Technologies</strong> | Lusaka, Zambia | July 2021 - October 2021</p>
+                    <ul>
+                        <li>Data Management, Customer relations Management, Negotiation</li>
+                        <li>Data entry and cold calling</li>
+                    </ul>
+                </div>
             </div>
-            <button class="toggle-btn" aria-label="Toggle Experience Content">
-                <i class="fas fa-chevron-down"></i>
+            <button class="toggle-btn active" aria-label="Toggle Experience Content">
+                <i class="fas fa-chevron-up"></i>
             </button>
+        </section>
+
+        <section id="skills" class="container fade-in">
+            <h2><i class="fas fa-cogs"></i> Skills</h2>
+            <div class="skills-grid">
+                <div class="skill-category">
+                    <h3><i class="fas fa-laptop-code"></i> Technical Skills</h3>
+                    <ul>
+                        <li>HTML/CSS/JAVA</li>
+                        <li>Business Analytics</li>
+                        <li>System Analysis and Design</li>
+                        <li>Business Strategy</li>
+                        <li>Data management</li>
+                        <li>Traditional and Digital marketing</li>
+                    </ul>
+                </div>
+                <div class="skill-category">
+                    <h3><i class="fas fa-comments"></i> Communication Skills</h3>
+                    <ul>
+                        <li>Computer Networking</li>
+                        <li>SQL</li>
+                        <li>Database management</li>
+                        <li>Marketing</li>
+                        <li>Accounting</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="certifications" class="container fade-in">
+            <h2><i class="fas fa-certificate"></i> Certifications</h2>
+            <div class="certifications-list">
+                 <div class="certification-item">
+                    <p><strong>Customers Care</strong> - iSON Technologies - Leading IT Company in Africa and Middle East</p>
+                </div>
+                <div class="certification-item">
+                    <p><strong>Seed for the future (5g basic, AI basic, Cloud Computing basic)</strong> - Huawei</p>
+                </div>
+            </div>
         </section>
 
         <section id="services" class="container fade-in">
@@ -379,10 +830,27 @@
             // Toggle content
             const toggleBtns = document.querySelectorAll('.toggle-btn');
             toggleBtns.forEach(btn => {
+                const content = btn.previousElementSibling;
+                // Initialize state based on class 'show' for content and 'active' for button
+                if (content.classList.contains('show')) {
+                    btn.classList.add('active');
+                    btn.querySelector('i').classList.remove('fa-chevron-down');
+                    btn.querySelector('i').classList.add('fa-chevron-up');
+                } else {
+                    btn.querySelector('i').classList.remove('fa-chevron-up');
+                    btn.querySelector('i').classList.add('fa-chevron-down');
+                }
+
                 btn.addEventListener('click', () => {
-                    const content = btn.previousElementSibling;
                     content.classList.toggle('show');
                     btn.classList.toggle('active');
+                    if (content.classList.contains('show')) {
+                        btn.querySelector('i').classList.remove('fa-chevron-down');
+                        btn.querySelector('i').classList.add('fa-chevron-up');
+                    } else {
+                        btn.querySelector('i').classList.remove('fa-chevron-up');
+                        btn.querySelector('i').classList.add('fa-chevron-down');
+                    }
                 });
             });
         });
